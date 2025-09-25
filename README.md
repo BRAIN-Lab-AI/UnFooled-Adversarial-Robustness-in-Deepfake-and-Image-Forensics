@@ -2,22 +2,42 @@
 
 ## Project Metadata
 ### Authors
-- **Team:** Name1, Namw2
+- **Team:** Noor Fatima
 - **Supervisor Name:** Dr. Muzammil Behzad
-- **Affiliations:** SABIC, ARAMCO and KFUPM (write your institution name, and/or KFUPM)
+- **Affiliations:** KFUPM
 
 ## Introduction
-Write 1-2 technical paragraphs (feel free to add images if you would like).
+Deepfake and image-tampering detectors look great on clean test sets, but real-world photos don’t stay clean. People can re-save images to shift JPEG blocks, apply tiny warps to hide resampling traces, use AI fills to smooth seams, or run the file through social apps that strip useful camera noise. In low-light or surveillance footage (often compressed or infrared), these small edits can quietly break today’s detectors.
+
+UnFooled tackles this by training the model to expect attacks. We:
+1. Practice against a red team of common counter-forensics during training.
+2. Combine content cues (what’s in the picture) with physics-like cues (noise patterns, resampling artifacts).
+3. Use randomized checks at test time (slight crops/resizes/recompressions) and vote on the result.
+The goal: a detector that stays accurate, well-calibrated, and explainable—even when the forger fights back.
 
 ## Problem Statement
-Write 1-2 technical paragraphs (feel free to add images if you would like).
+We treat the task as (a) real vs. fake and (b) where is it fake (a heatmap), even after the image has been tweaked to fool us. Attackers may know our model (white-box), know our general tricks (gray-box), or only see outputs (black-box). They must keep changes hard to notice while keeping the edited content.
+
+We assume messy “chain of custody” (e.g., WhatsApp/Telegram recompression) and surveillance quirks (rolling shutter, LED flicker, NIR).
+Our questions:
+
+Q1: Which counter-forensics hurt most, and by how much?
+
+Q2: Does training with a mix of attacks improve worst-case robustness, not just average scores?
+
+Q3: Do small random test-time jitters reduce attack transfer without being slow—and can we abstain when uncertain?
+
+We will report drop in AUC under attack (ΔAUC), worst-case accuracy across attack types, and confidence calibration suitable for legal use.
 
 ## Application Area and Project Domain
-Write 1-2 technical paragraphs (feel free to add images if you would like).
+Targets include law enforcement and media forensics. Users need: a clear real/fake score, a heatmap showing where the tamper likely is, and a confidence readout (with the option to abstain when unsure).
+
+Our pipeline can also work with provenance standards (e.g., C2PA): if signed claims exist, we check them; if not, we rely on physics-style cues. This makes reports useful for internal reviews and courtroom exhibits.
 
 ## What is the paper trying to do, and what are you planning to do?
-Write 1-2 technical paragraphs (feel free to add images if you would like).
+We propose UnFooled, an attack-aware detector that pairs red-team training with randomized test-time defense and two-stream features (content + residuals). During training, each batch is hit with the most damaging of several edits: JPEG re-align + recompress, tiny resampling warps, denoise→regrain (PRNU/noiseprint spoof), seam smoothing, small color/gamma shifts, and social-app transcodes. The model learns both to decide real/fake and to mark tampered pixels.
 
+At test time, we run a few small random transforms (resize/crop phase, gamma tweak, JPEG quality/phase), get multiple predictions, and vote. Under the hood, we use a pretrained backbone (e.g., ResNet-50) plus a forensic residual adapter and a light FPN-style mask head—fast to fine-tune, sensitive to subtle traces. We will report clean vs. attacked metrics side-by-side (ΔAUC, worst-case accuracy, IoU for localization, and calibration/ECE) on standard deepfake/tamper datasets and a surveillance-style split (low-light, heavy compression). Success = small ΔAUC, strong worst-case, and clear, judge-friendly explanations—because a detector that only works when nobody’s trying to fool it isn’t very forensic.
 
 # THE FOLLOWING IS SUPPOSED TO BE DONE LATER
 
