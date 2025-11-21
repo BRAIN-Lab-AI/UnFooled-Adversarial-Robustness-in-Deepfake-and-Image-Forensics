@@ -46,7 +46,7 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 - **Report:** [Project Report](/report.pdf)
 
 ### Reference Paper
-- [Adversarial Threats to DeepFake Detection: A Practical Perspectiv](https://openaccess.thecvf.com/content/CVPR2021W/WMF/papers/Neekhara_Adversarial_Threats_to_DeepFake_Detection_A_Practical_Perspective_CVPRW_2021_paper.pdf)
+- [Adversarial Threats to DeepFake Detection: A Practical Perspective](https://openaccess.thecvf.com/content/CVPR2021W/WMF/papers/Neekhara_Adversarial_Threats_to_DeepFake_Detection_A_Practical_Perspective_CVPRW_2021_paper.pdf)
 
 ### Reference Dataset
 - [CIFAR-10](https://www.cs.toronto.edu/%7Ekriz/cifar.html)
