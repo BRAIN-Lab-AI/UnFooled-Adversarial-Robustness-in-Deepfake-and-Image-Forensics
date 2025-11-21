@@ -46,9 +46,10 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 - **Report:** [Project Report](/report.pdf)
 
 ### Reference Paper
-- [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
+- [Adversarial Threats to DeepFake Detection: A Practical Perspectiv](https://openaccess.thecvf.com/content/CVPR2021W/WMF/papers/Neekhara_Adversarial_Threats_to_DeepFake_Detection_A_Practical_Perspective_CVPRW_2021_paper.pdf)
 
 ### Reference Dataset
+- [CIFAR-10](https://www.cs.toronto.edu/%7Ekriz/cifar.html)
 - [DeepFakeFace Dataset](https://huggingface.co/datasets/OpenRL/DeepFakeFace)
 
 
@@ -140,5 +141,3 @@ The workflow of the Enhanced Stable Diffusion model is designed to translate tex
 
 ## Acknowledgments
 - **Open-Source Communities:** Thanks to the contributors of PyTorch, Hugging Face, and other libraries for their amazing work.
-- **Individuals:** Special thanks to bla, bla, bla for the amazing team effort, invaluable guidance and support throughout this project.
-- **Resource Providers:** Gratitude to ABC-organization for providing the computational resources necessary for this project.
