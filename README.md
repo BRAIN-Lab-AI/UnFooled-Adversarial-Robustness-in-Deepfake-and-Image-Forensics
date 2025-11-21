@@ -128,7 +128,7 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ```bash
 git clone https://github.com/BRAIN-Lab-AI/UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics
-cd unfooled
+cd unfooled_code
 ```
 
 **Option B — Download ZIP**
