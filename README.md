@@ -122,18 +122,12 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ## How to Run the Code
 
-Here’s a clean “How to Run the Code” section you can drop into your README. I tailored it to the modular repo I generated; replace the GitHub URL with your actual repo if you push it. (Or download directly: [Download ZIP](sandbox:/mnt/data/unfooled-robust-modular-20251121_164402.zip))
-
----
-
-## How to Run the Code
-
 ### 1) Get the sources
 
 **Option A — GitHub**
 
 ```bash
-git clone https://github.com/yourusername/unfooled-robust.git
+git clone https://github.com/BRAIN-Lab-AI/UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics
 cd unfooled-robust
 ```
 
