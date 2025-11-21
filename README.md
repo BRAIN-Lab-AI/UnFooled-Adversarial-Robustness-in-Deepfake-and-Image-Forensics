@@ -1,4 +1,4 @@
-# UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics
+# UnFooled: Attack-aware Deepfake Forensics
 
 ## Project Metadata
 ### Authors
@@ -55,16 +55,15 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ### Terminologies
 * **Two-Stream Detector:** A model with a semantic/content stream and a forensic-residual stream; features are fused via a lightweight adapter for classification and evidence mapping. 
-* **Residual Extractor (R(·)):** High-pass/SRM/wavelet style operator that emphasizes manipulation-sensitive, high-frequency cues before the residual encoder. See the pipeline diagram on p.4 (Fig. 2). 
+* **Residual Extractor (R(·)):** High-pass/SRM/wavelet style operator that emphasizes manipulation-sensitive, high-frequency cues before the residual encoder. 
 * **Lightweight Fusion (F):** Channel-gating + 1×1 mixing to merge content and residual features into a joint representation used by heads. 
 * **Shallow FPN Evidence Head:** An upsampling head that aggregates multi-scale features to produce a tamper heatmap under weak supervision (face-region priors). 
 * **Worst-of-K Red-Team Training:** For each image, sample multiple counter-forensic transforms and train on the one that maximally harms the classifier—hardening the model to realistic attacks (JPEG realign/recompress, subtle resampling, denoise→regrain/PRNU-spoof, seam smoothing, mild color/gamma shifts, social-app transcodes). 
-* **Randomized Test-Time Augmentation (TTA):** Low-cost jitters (resize/crop phase, mild gamma, JPEG phase) with logit averaging for decisions and pixelwise max for heatmaps. See Algorithm 2 and Fig. 2. 
+* **Randomized Test-Time Augmentation (TTA):** Low-cost jitters (resize/crop phase, mild gamma, JPEG phase) with logit averaging for decisions and pixelwise max for heatmaps.
 * **Weak Localization:** Training/evaluation of evidence maps using soft face-region priors instead of pixel-accurate masks; metrics emphasize “energy within ROI” and precision-in-ROI. 
 * **Global Operating Point:** A single threshold chosen to maximize worst-case accuracy across clean and attacked splits, then fixed for reporting. 
 * **Reliability Metrics:** Expected Calibration Error (ECE), Brier score, Negative Log-Likelihood (NLL), and selective prediction via AURC (risk–coverage). 
-* **Regrain Stressor:** Denoise→regrain (PRNU spoof) is the hardest of the tested families but remains controlled with the combined training + TTA. See results tables/figures (pp. 7–9). 
-
+* **Regrain Stressor:** Denoise→regrain (PRNU spoof) is the hardest of the tested families but remains controlled with the combined training + TTA. 
 ## Problem Statements
 
 * **Problem 1 — Robustness under realistic counter-forensics:** Detectors trained on clean or narrowly augmented data fail under recompression, resampling, regraining, and app transcodes common in the wild. 
@@ -86,11 +85,9 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 # Proposed Solution: Code-Based Implementation
 
-This repository implements **UnFooled-2Stream (UF-2S)** in PyTorch.
-
-* **Modified Architecture:** Pretrained content backbone + residual extractor/encoder; lightweight fusion; classifier head; shallow FPN mask head. See Fig. 2 (p. 4). 
-* **Training Regimen:** Deterministic preprocessing; worst-of-K red-team transforms with weighted BCE + soft-Dice for masks, edge/size regularizers, and cross-view consistency. See Algorithm 1. 
-* **Inference:** Randomized TTA with logit averaging and heatmap max-pool aggregation; single global operating point. See Algorithm 2. 
+* **Modified Architecture:** Pretrained content backbone + residual extractor/encoder; lightweight fusion; classifier head; shallow FPN mask head. 
+* **Training Regimen:** Deterministic preprocessing; worst-of-K red-team transforms with weighted BCE + soft-Dice for masks, edge/size regularizers, and cross-view consistency. 
+* **Inference:** Randomized TTA with logit averaging and heatmap max-pool aggregation; single global operating point.
 * **Evaluation:** Clean vs attacked counterparts, worst-case accuracy, calibration (ECE/NLL/Brier), and weak-localization summaries (energy/precision in ROI). 
 
 # Key Components
@@ -110,9 +107,9 @@ This repository implements **UnFooled-2Stream (UF-2S)** in PyTorch.
 
 ## Diffusion-Style “Refinement” Analogue (in our detector)
 
-* **Residual Path:** Apply (R(·)) (high-pass/SRM/wavelet) → residual encoder → features (\varphi_r). 
-* **Content Path:** Pretrained backbone → semantic features (\varphi_c). 
-* **Fusion + Heads:** Adapter (F(\varphi_c,\varphi_r)) → classifier logit (s) and FPN mask-logits (z). Evidence head upsamples multi-scale features to an input-aligned heatmap. 
+* **Residual Path:** Apply (R(·)) (high-pass/SRM/wavelet) → residual encoder → features. 
+* **Content Path:** Pretrained backbone → semantic features. 
+* **Fusion + Heads:** Adapter → classifier logit (s) and FPN mask-logits (z). Evidence head upsamples multi-scale features to an input-aligned heatmap. 
 
 ## Training (Attack-Aware)
 
@@ -125,31 +122,87 @@ This repository implements **UnFooled-2Stream (UF-2S)** in PyTorch.
 
 ## How to Run the Code
 
-1. **Clone the Repository:**
-    ```bash
-    git clone https://github.com/yourusername/enhanced-stable-diffusion.git
-    cd enhanced-stable-diffusion
-    ```
+Here’s a clean “How to Run the Code” section you can drop into your README. I tailored it to the modular repo I generated; replace the GitHub URL with your actual repo if you push it. (Or download directly: [Download ZIP](sandbox:/mnt/data/unfooled-robust-modular-20251121_164402.zip))
 
-2. **Set Up the Environment:**
-    Create a virtual environment and install the required dependencies.
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use: venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+---
 
-3. **Train the Model:**
-    Configure the training parameters in the provided configuration file and run:
-    ```bash
-    python train.py --config configs/train_config.yaml
-    ```
+## How to Run the Code
 
-4. **Generate Images:**
-    Once training is complete, use the inference script to generate images.
-    ```bash
-    python inference.py --checkpoint path/to/checkpoint.pt --input "A surreal landscape with mountains and rivers"
-    ```
+### 1) Get the sources
+
+**Option A — GitHub**
+
+```bash
+git clone https://github.com/yourusername/unfooled-robust.git
+cd unfooled-robust
+```
+
+**Option B — Download ZIP**
+
+* Download ZIP
+
+### 2) Set up the environment
+
+```bash
+python3 -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+# .venv\Scripts\Activate.ps1
+
+pip install --upgrade pip
+pip install -r requirements.txt
+pip install -e .
+```
+
+Quick check:
+
+```bash
+python -c "import unfooled, sys; print('unfooled', unfooled.__version__); print(sys.version)"
+```
+
+### 3) Train
+
+Use the provided CLI entry point (recommended):
+
+```bash
+# minimal example
+unfooled-train --data /path/to/data --epochs 1 --batch-size 8
+
+# typical GPU run
+unfooled-train --data /path/to/data --epochs 50 --batch-size 32 --device cuda
+```
+
+Or run the script directly:
+
+```bash
+python scripts/train.py --data /path/to/data --epochs 50 --batch-size 32 --device cuda
+```
+
+> Wire your actual training loop inside `src/unfooled/training/train.py` (the entry points call into that module).
+
+### 4) Inference / Evaluation
+
+Using the CLI:
+
+```bash
+unfooled-eval --data /path/to/data --checkpoint /path/to/checkpoint.pt --device cuda
+```
+
+Or via script:
+
+```bash
+python scripts/eval.py --data /path/to/data --checkpoint /path/to/checkpoint.pt --device cuda
+```
+
+
+### Notes
+
+* **Data paths:** point `--data` to your prepared dataset root. Add/modify loaders in `src/unfooled/data/datasets.py`.
+* **Checkpoints:** training scripts should save `.pt` files; pass one to `--checkpoint` for evaluation.
+* **Devices:** use `--device cuda` for GPU, `--device cpu` for CPU.
+* **Editable install:** `pip install -e .` lets you edit code in `src/unfooled/` without reinstalling.
+
 
 ## Acknowledgments
 - **Open-Source Communities:** Thanks to the contributors of PyTorch, Hugging Face, and other libraries for their amazing work.
