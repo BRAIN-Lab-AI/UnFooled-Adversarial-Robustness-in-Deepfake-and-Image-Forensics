@@ -49,7 +49,7 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 - [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
 
 ### Reference Dataset
-- [LAION-5B Dataset](https://laion.ai/blog/laion-5b/)
+- [DeepFakeFace Dataset](https://huggingface.co/datasets/OpenRL/DeepFakeFace)
 
 
 ## Project Technicalities
