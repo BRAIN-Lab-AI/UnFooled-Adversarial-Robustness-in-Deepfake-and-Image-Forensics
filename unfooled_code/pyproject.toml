@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "unfooled"
 version = "0.1.0"
-description = "Attack-aware robust deepfake detection"
+description = "UnFooled: Attack-aware Deepfake Forensics"
 authors = [{name="Noor Fatima"}]
 readme = "README.md"
 requires-python = ">=3.9"
