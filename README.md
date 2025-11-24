@@ -55,9 +55,12 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ### Terminologies
 * **Two-Stream Detector:** A model with a semantic/content stream and a forensic-residual stream; features are fused via a lightweight adapter for classification and evidence mapping. 
-* **Residual Extractor (R(·)):** High-pass/SRM/wavelet style operator that emphasizes manipulation-sensitive, high-frequency cues before the residual encoder. 
+* **Residual stream:** Forensic branch fed by SRM/HPF (high-pass/Spatial Rich Model filters) + a small CNN to emphasize noise/edge artifacts rather than content.
+* **SRM/HPF:** Fixed or learnable high-pass filters that suppress low-frequency content and reveal manipulation fingerprints. 
 * **Lightweight Fusion (F):** Channel-gating + 1×1 mixing to merge content and residual features into a joint representation used by heads. 
-* **Shallow FPN Evidence Head:** An upsampling head that aggregates multi-scale features to produce a tamper heatmap under weak supervision (face-region priors). 
+* **Shallow FPN Evidence Head:** An upsampling head that aggregates multi-scale features to produce a tamper heatmap under weak supervision (face-region priors).
+* **Mask head:** Lightweight conv stack (often 3×3 convs) that upsamples P-features to produce a tamper heatmap (HxW probabilities).
+* **GAP (Global Average Pooling):** Averages each feature map channel over H×W to get one number per channel; used to form a compact vector for classification
 * **Worst-of-K Red-Team Training:** For each image, sample multiple counter-forensic transforms and train on the one that maximally harms the classifier—hardening the model to realistic attacks (JPEG realign/recompress, subtle resampling, denoise→regrain/PRNU-spoof, seam smoothing, mild color/gamma shifts, social-app transcodes). 
 * **Randomized Test-Time Augmentation (TTA):** Low-cost jitters (resize/crop phase, mild gamma, JPEG phase) with logit averaging for decisions and pixelwise max for heatmaps.
 * **Weak Localization:** Training/evaluation of evidence maps using soft face-region priors instead of pixel-accurate masks; metrics emphasize “energy within ROI” and precision-in-ROI. 
