@@ -84,14 +84,18 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 1. **Attack-Aware Training:** Worst-of-K mixture of realistic counter-forensics per mini-batch to harden features. 
 2. **Phase-Aware TTA:** Randomized test-time jitters with aggregation to stabilize decisions and calibration. 
-3. **Two-Stream + Shallow FPN:** Fuse semantic content and residual cues via a lightweight adapter; emit weakly supervised heatmaps for evidence. 
+3. **Two-Stream + Shallow FPN:** Fuse semantic content and residual cues via a lightweight adapter; emit weakly supervised heatmaps for evidence.
+
+<img width="1781" height="1106" alt="unfooled drawio" src="https://github.com/user-attachments/assets/4901da73-f4e8-494a-a27e-95f2a2bcf12a" />
 
 # Proposed Solution: Code-Based Implementation
 
 * **Modified Architecture:** Pretrained content backbone + residual extractor/encoder; lightweight fusion; classifier head; shallow FPN mask head. 
 * **Training Regimen:** Deterministic preprocessing; worst-of-K red-team transforms with weighted BCE + soft-Dice for masks, edge/size regularizers, and cross-view consistency. 
 * **Inference:** Randomized TTA with logit averaging and heatmap max-pool aggregation; single global operating point.
-* **Evaluation:** Clean vs attacked counterparts, worst-case accuracy, calibration (ECE/NLL/Brier), and weak-localization summaries (energy/precision in ROI). 
+* **Evaluation:** Clean vs attacked counterparts, worst-case accuracy, calibration (ECE/NLL/Brier), and weak-localization summaries (energy/precision in ROI).
+* 
+<img width="899" height="194" alt="pipeline" src="https://github.com/user-attachments/assets/96378125-c14d-45f1-b3c8-f6aa733ddda6" />
 
 # Key Components
 
@@ -108,6 +112,7 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 * **Preprocessing Π(·):** Color/dynamic-range standardization; resize to fixed resolution. 
 * **Weak Prior (g):** Soft face-region mask (expanded box + Gaussian) for evidence supervision/evaluation. 
 
+
 ## Diffusion-Style “Refinement” Analogue (in our detector)
 
 * **Residual Path:** Apply (R(·)) (high-pass/SRM/wavelet) → residual encoder → features. 
@@ -116,12 +121,16 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ## Training (Attack-Aware)
 
-* **Worst-of-K:** For each sample, pick the most damaging transform among the sampled K edits and train on that view; include clean-view mask consistency. 
+* **Worst-of-K:** For each sample, pick the most damaging transform among the sampled K edits and train on that view; include clean-view mask consistency.
+
+<img width="2370" height="1193" alt="1" src="https://github.com/user-attachments/assets/3a892ae0-8c0e-4632-b815-071fd358a945" />
+
 
 ## Inference (Deployment-Facing)
 
 * **Randomized TTA:** Apply small jitters (crop/resize phase, mild gamma, JPEG phase); average logits for probability; take pixelwise max over heatmaps to preserve localized peaks. 
 * **Outputs:** (1) Decision + calibrated confidence; (2) Aggregated evidence heatmap concentrated within plausible face regions.
+<img width="2766" height="2392" alt="55" src="https://github.com/user-attachments/assets/c82a1525-627d-45be-b558-f8934dbe770b" />
 
 ## How to Run the Code
 
