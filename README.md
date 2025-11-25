@@ -40,7 +40,7 @@ We propose UnFooled, an attack-aware detector that pairs red-team training with 
 At test time, we run a few small random transforms (resize/crop phase, gamma tweak, JPEG quality/phase), get multiple predictions, and vote. Under the hood, we use a pretrained backbone (e.g., ResNet-50) plus a forensic residual adapter and a light FPN-style mask head—fast to fine-tune, sensitive to subtle traces. We will report clean vs. attacked metrics side-by-side (ΔAUC, worst-case accuracy, IoU for localization, and calibration/ECE) on standard deepfake/tamper datasets and a surveillance-style split (low-light, heavy compression). Success = small ΔAUC, strong worst-case, and clear, judge-friendly explanations—because a detector that only works when nobody’s trying to fool it isn’t very forensic.
 
 ## Project Documents
-- **Presentation:** [Project Presentation](/presentation.pptx)
+- **Presentation:** [Project Presentation](https://github.com/BRAIN-Lab-AI/UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics/blob/main/noorDL.pptx)
 - **Report:** [Project Report](https://www.overleaf.com/read/wdtbcccszgng#bf7a2a)
 
 ### Reference Paper
