@@ -41,7 +41,7 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ## Project Documents
 - **Presentation:** [Project Presentation](https://github.com/BRAIN-Lab-AI/UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics/blob/main/noorDL.pptx)
-- **Report:** [Project Report](https://www.overleaf.com/read/wdtbcccszgng#bf7a2a)
+- **Report:** [Project Report](https://github.com/BRAIN-Lab-AI/UnFooled-Adversarial-Robustness-in-Deepfake-and-Image-Forensics/blob/main/DL_PAPER.pdf)
 
 ### Reference Paper
 - [Adversarial Threats to DeepFake Detection: A Practical Perspective](https://openaccess.thecvf.com/content/CVPR2021W/WMF/papers/Neekhara_Adversarial_Threats_to_DeepFake_Detection_A_Practical_Perspective_CVPRW_2021_paper.pdf)
