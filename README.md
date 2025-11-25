@@ -121,15 +121,16 @@ At test time, we run a few small random transforms (resize/crop phase, gamma twe
 
 ## Training (Attack-Aware)
 
-* **Worst-of-K:** For each sample, pick the most damaging transform among the sampled K edits and train on that view; include clean-view mask consistency.
-
-<img width="2370" height="1193" alt="1" src="https://github.com/user-attachments/assets/3a892ae0-8c0e-4632-b815-071fd358a945" />
+**Worst-of-K:** For each sample, pick the most damaging transform among the sampled K edits and train on that view; include clean-view mask consistency.
 
 
 ## Inference (Deployment-Facing)
 
 * **Randomized TTA:** Apply small jitters (crop/resize phase, mild gamma, JPEG phase); average logits for probability; take pixelwise max over heatmaps to preserve localized peaks. 
 * **Outputs:** (1) Decision + calibrated confidence; (2) Aggregated evidence heatmap concentrated within plausible face regions.
+
+<img width="2370" height="1193" alt="1" src="https://github.com/user-attachments/assets/3a892ae0-8c0e-4632-b815-071fd358a945" />
+
 <img width="2766" height="2392" alt="55" src="https://github.com/user-attachments/assets/c82a1525-627d-45be-b558-f8934dbe770b" />
 
 ## How to Run the Code
